@@ -10,7 +10,7 @@ const Navbar = ({ userInput, setUserInput }) => {
     }
   }, []);
   return (
-    <nav className="flex justify-between contentContainer flex-rows col-span-2 w-aut  ">
+    <nav className="flex justify-between contentContainer flex-rows col-span-2 fixed top-0  left-0 z-50 ">
       <h1>Logo</h1>
       <div className="flex gap-4">
         <Link to="/" className="link">
@@ -44,7 +44,7 @@ const Navbar = ({ userInput, setUserInput }) => {
         </button>
       </div>
       <div className="flex gap-4">
-        <Link className="link">
+        <Link className="link" to="/login">
           Login<span className="underliner"></span>
         </Link>
         <Link className="link">

@@ -1,12 +1,22 @@
-import Promo from "./HomeComponents/Promo";
-import Popular from "./HomeComponents/PopularList";
+import { motion } from "framer-motion";
+import ImageCarousel from "./HomeComponents/ImageCarousel.jsx";
 
 const Home = () => {
+  const cardContainerVariants = {
+    animate: {
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
+  };
+
   return (
-    <main className="grid grid-cols-2">
-      <Promo />
-      <Popular />
-    </main>
+    <motion.main
+      variants={cardContainerVariants}
+      className="grid grid-cols-2 grid-rows-1"
+    >
+      <ImageCarousel />
+    </motion.main>
   );
 };
 export default Home;
