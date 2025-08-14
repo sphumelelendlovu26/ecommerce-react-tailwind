@@ -3,10 +3,11 @@ import Home from "./pages/Home.jsx";
 import Navbar from "./pages/HomeComponents/NavBar.jsx";
 import { useState } from "react";
 import ProductList from "./pages/Products.jsx";
-import Login from "./pages/Login.jsx";
-import { motion, AnimatePresence } from "framer-motion";
 
-function AnimatedPages({ userInput, setUserInput }) {
+import { motion, AnimatePresence } from "framer-motion";
+import ThemeProvider from "./Context/ThemeContext.jsx";
+
+function AnimatedPages({ userInput, setUserInput, query, setQuery }) {
   const location = useLocation(null);
 
   return (
@@ -16,10 +17,14 @@ function AnimatedPages({ userInput, setUserInput }) {
         <Route
           path="/products"
           element={
-            <ProductList userInput={userInput} setUserInput={setUserInput} />
+            <ProductList
+              userInput={userInput}
+              setUserInput={setUserInput}
+              query={query}
+              setQuery={setQuery}
+            />
           }
         ></Route>
-        <Route path="/login" element={<Login />}></Route>
       </Routes>
     </AnimatePresence>
   );
@@ -27,11 +32,24 @@ function AnimatedPages({ userInput, setUserInput }) {
 
 function App() {
   const [userInput, setUserInput] = useState("");
+  const [query, setQuery] = useState("");
   return (
-    <BrowserRouter>
-      <Navbar userInput={userInput} setUserInput={setUserInput} />
-      <AnimatedPages userInput={userInput} setUserInput={setUserInput} />
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Navbar
+          userInput={userInput}
+          setUserInput={setUserInput}
+          setQuery={setQuery}
+          query={query}
+        />
+        <AnimatedPages
+          userInput={userInput}
+          setUserInput={setUserInput}
+          setQuery={setQuery}
+          query={query}
+        />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

@@ -60,3 +60,6 @@ nav {
 .page {
   @apply pt-10;
 }
+.dark {
+  @apply bg-gray-900 text-white transition;
+}

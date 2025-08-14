@@ -41,7 +41,7 @@ const ImageCarousel = () => {
   const currentPromo = promos[index];
 
   return (
-    <section className=" col-span-1 row-span-1">
+    <section className=" col-span-1 row-span-1 ">
       <div className="w-full h-48 relative ">
         <h2 className="text-lg font-bold mb-2 text-center">Promotions</h2>
         <img
