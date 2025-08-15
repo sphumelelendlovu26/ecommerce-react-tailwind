@@ -63,3 +63,9 @@ nav {
 .dark {
   @apply bg-gray-900 text-white transition;
 }
+.modal {
+  @apply w-full h-[100%] justify-self-center;
+}
+.modalProductContainer {
+  @apply p-2;
+}

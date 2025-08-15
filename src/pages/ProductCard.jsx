@@ -2,9 +2,18 @@ import { motion } from "framer-motion";
 
 motion;
 
-const ProductCard = ({ product, ...motionProps }) => {
+const ProductCard = ({
+  setIsOpen,
+  product,
+  setModalProduct,
+  ...motionProps
+}) => {
   return (
     <motion.div
+      onClick={() => {
+        setIsOpen(true);
+        setModalProduct(product);
+      }}
       {...motionProps}
       className="shadow-md rounded-xl flex flex-col hover:cursor-pointer hover:shadow-indigo-500 transition-all duration-300"
     >
