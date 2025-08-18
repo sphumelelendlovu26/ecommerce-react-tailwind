@@ -41,13 +41,13 @@ const ImageCarousel = () => {
   const currentPromo = promos[index];
 
   return (
-    <section className=" col-span-1 row-span-1 ">
-      <div className="w-full h-48 relative ">
-        <h2 className="text-lg font-bold mb-2 text-center">Promotions</h2>
+    <section className=" col-span-1 row-span-1  ">
+      <h2 className="text-lg  font-bold mb-2 text-center">Promotions</h2>
+      <div className="w-full h-72 relative ">
         <img
           src={currentPromo.images[0] || ""}
           alt={currentPromo.title}
-          className="w-full  object-cover rounded-xl transition-opacity duration-700 ease-in-out"
+          className="w-full  object-cover rounded-xl transition-opacity duration-300 ease-in-out"
           loading="lazy"
         />
         <span className="bg-red-600 absolute top-4 right-0 rounded p text-white">

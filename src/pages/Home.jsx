@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import ImageCarousel from "./HomeComponents/ImageCarousel.jsx";
+import ImageCarousel from "./components/ImageCarousel";
 
 const Home = () => {
   const cardContainerVariants = {
@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <motion.main
       variants={cardContainerVariants}
-      className="grid grid-cols-2 grid-rows-1"
+      className="grid h-screen page"
     >
       <ImageCarousel />
     </motion.main>

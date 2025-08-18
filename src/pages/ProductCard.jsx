@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-
-motion;
+import { useContext } from "react";
+import { CartContext } from "../Context/CartContext";
+import { FaCartPlus } from "react-icons/fa6";
 
 const ProductCard = ({
   setIsOpen,
@@ -8,14 +9,13 @@ const ProductCard = ({
   setModalProduct,
   ...motionProps
 }) => {
+  const globalCartState = useContext(CartContext);
+  const dispatch = globalCartState.dispatch;
+
   return (
     <motion.div
-      onClick={() => {
-        setIsOpen(true);
-        setModalProduct(product);
-      }}
       {...motionProps}
-      className="shadow-md rounded-xl flex flex-col hover:cursor-pointer hover:shadow-indigo-500 transition-all duration-300"
+      className="shadow-md relative rounded-xl flex flex-col hover:cursor-pointer hover:shadow-indigo-500 transition-all duration-300"
     >
       <img
         src={product.thumbnail}
@@ -25,7 +25,22 @@ const ProductCard = ({
         style={{ alignSelf: "center" }}
       />
       <h2 className="font-bold text-center">{product.title}</h2>
-      <p className="text-gray-600 font-bold text-center">$ {product.price}</p>
+      <p className=" font-bold text-center">$ {product.price}</p>
+      <div className="size-full bg-trasparent absolute">
+        <div
+          onClick={() => {
+            setIsOpen(true);
+            setModalProduct(product);
+          }}
+          className=" h-[90%]"
+        ></div>{" "}
+        <button
+          onClick={() => dispatch({ type: "Add", payload: product })}
+          className=" absolute top-1.5 right-1.5 bg-indigo-500 hover:cursor-pointer  indigoBtn flex justify-center rounded text-indigo-50 px-3 py-1"
+        >
+          <FaCartPlus />
+        </button>
+      </div>
     </motion.div>
   );
 };

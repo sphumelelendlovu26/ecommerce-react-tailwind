@@ -54,11 +54,10 @@ label {
 nav {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
 }
 .page {
-  @apply pt-10;
+  @apply pt-12 mt-10;
 }
 .dark {
   @apply bg-gray-900 text-white transition;
@@ -68,4 +67,7 @@ nav {
 }
 .modalProductContainer {
   @apply p-2;
+}
+.indigoBtn {
+  @apply hover:bg-transparent hover:text-indigo-500 transition hover:border-indigo-500 border-1;
 }
