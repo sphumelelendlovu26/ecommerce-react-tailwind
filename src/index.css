@@ -55,9 +55,11 @@ nav {
   position: fixed;
   top: 0;
   right: 0;
+  width: 100vw;
+  background-color: black;
 }
 .page {
-  @apply pt-12 mt-10;
+  @apply p-12 mt-5;
 }
 .dark {
   @apply bg-gray-900 text-white transition;
@@ -70,4 +72,16 @@ nav {
 }
 .indigoBtn {
   @apply hover:bg-transparent hover:text-indigo-500 transition hover:border-indigo-500 border-1;
+}
+.sideBar {
+  @apply py-5 sm:py-0;
+}
+button:hover {
+  transform: scale(1.05);
+}
+button:active {
+  transform: scale(0.95);
+}
+.cartItem {
+  @apply p-4;
 }

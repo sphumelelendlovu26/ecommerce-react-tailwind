@@ -15,7 +15,7 @@ const ProductCard = ({
   return (
     <motion.div
       {...motionProps}
-      className="shadow-md relative rounded-xl flex flex-col hover:cursor-pointer hover:shadow-indigo-500 transition-all duration-300"
+      className="shadow-sm relative rounded-xl flex flex-col hover:cursor-pointer hover:shadow-indigo-500 transition-all duration-300"
     >
       <img
         src={product.thumbnail}

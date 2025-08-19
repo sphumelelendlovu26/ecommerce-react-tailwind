@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { ThemeContext } from "../Context/ThemeContext";
 import ProductDetails from "./productDetails";
 import { AnimatePresence } from "framer-motion";
-import CartProvider from "../Context/CartContext";
 
 const Modal = ({ isOpen, setIsOpen, product }) => {
   const { theme } = useContext(ThemeContext);
@@ -37,9 +36,7 @@ const Modal = ({ isOpen, setIsOpen, product }) => {
             >
               X
             </button>{" "}
-            <CartProvider>
-              {product && <ProductDetails product={product} theme={theme} />}
-            </CartProvider>
+            {product && <ProductDetails product={product} theme={theme} />}
           </motion.div>
         </motion.div>
       )}

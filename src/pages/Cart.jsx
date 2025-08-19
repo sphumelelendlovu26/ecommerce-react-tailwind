@@ -7,10 +7,12 @@ const Cart = () => {
   const cartItems = globalCartState.state;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 sm:grid-cols-2 gap-3">
-      {cartItems.map((item) => (
-        <CartItem item={item} key={item.id} />
-      ))}
+    <div className="page grid cart size-screen grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-3 text-black">
+      {cartItems.length === 0 ? (
+        <div>No Items In Cart</div>
+      ) : (
+        cartItems.map((item) => <CartItem product={item} key={item.id} />)
+      )}
     </div>
   );
 };

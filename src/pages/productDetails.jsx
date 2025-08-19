@@ -21,8 +21,11 @@ const ProductDetails = ({ product, theme }) => {
       <h3 className="text-center">{product.price}</h3>
       <h2 className="text-center font-bold">Description</h2>
       <p className="text-center">{product.description}</p>
-      <h2 className="text-center v">Category : {product.category}</h2>
-      <h2 className="text-center">Availability : {product.stock} in stock</h2>
+      <h2 className="text-center font-bold">Category : {product.category}</h2>
+      <h2 className="text-center font-bold">
+        Availability : {product.stock} in stock
+      </h2>
+      <button className="text-indigo-500">Reviews </button>
     </div>
   );
 };
