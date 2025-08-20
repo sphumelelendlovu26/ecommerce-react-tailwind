@@ -5,7 +5,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+body {
+  @apply text-sm md:text-lg;
+}
 .contentContainer {
   @apply border-1 bg-gray-50 rounded-sm p-2 border-gray-300 shadow-md;
 }
@@ -84,4 +86,7 @@ button:active {
 }
 .cartItem {
   @apply p-4;
+}
+.reviewCard {
+  @apply mt-2 p-1;
 }

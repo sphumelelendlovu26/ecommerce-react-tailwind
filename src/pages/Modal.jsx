@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { ThemeContext } from "../Context/ThemeContext";
 import ProductDetails from "./productDetails";
 import { AnimatePresence } from "framer-motion";
-
 const Modal = ({ isOpen, setIsOpen, product }) => {
   const { theme } = useContext(ThemeContext);
   const bgColor =

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRef, useContext, useState } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../Context/ThemeContext";
 import SearchBar from "../SearchBar";
 import { CartContext } from "../../Context/CartContext";
@@ -11,6 +11,7 @@ import { RiMenuFold2Fill, RiMenuFoldFill } from "react-icons/ri";
 
 const Navbar = ({ userInput, setUserInput, setQuery }) => {
   const inputRef = useRef(null);
+  const sideBarRef = useRef();
 
   // contexts
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -23,11 +24,20 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  console.log(isMenuOpen);
-
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (sideBarRef.current && !sideBarRef.current.contains(e.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => document.addEventListener("mousedown", handleOutsideClick);
+  });
 
   const sidePanelVariants = {
     open: {
@@ -74,6 +84,7 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            ref={sideBarRef}
             variants={sidePanelVariants}
             layout
             initial={isMenuOpen && { opacity: 0, x: 100 }}
@@ -86,7 +97,7 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
             exit="close"
             className={` ${isMenuOpen === true ? "h-[1000%] w-[50%] block" : "w-0 hidden "} sideBar gap-3 absolute right-0 top-12  flex flex-col items-center border-r-0 rounded-r-none  ${bgColor} z-100 rounded-md border border-indigo-200
             sm:static sm:flex-row sm:border-0 sm:bg-transparent
-            sm:justify-evenly px-1  
+            sm:justify-evenly px-1  shadow-lg
             `}
           >
             <Link to="/" className="link ">

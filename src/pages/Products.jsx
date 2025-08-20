@@ -40,7 +40,7 @@ const ProductList = ({ query, setIsOpen, setModalProduct }) => {
     },
   };
   const cardVariants = {
-    initial: { opacity: 0, x: 20 },
+    initial: { opacity: 0, x: -20 },
     animate: { opacity: 1, x: 0 },
     exit: { opacity: 0, x: -20 },
   };
@@ -55,15 +55,19 @@ const ProductList = ({ query, setIsOpen, setModalProduct }) => {
       exit={{ opacity: 0, x: -20 }}
       className={`${bgColor} grid page grid-cols-2 sm:grid-cols-3 md:grid-cols-4 place-content-center gap-2 overflow-hidden respGrid`}
     >
-      {products.map((product) => (
-        <MotionProductCard
-          variants={cardVariants}
-          key={product.id}
-          product={product}
-          setIsOpen={setIsOpen}
-          setModalProduct={setModalProduct}
-        />
-      ))}
+      {products.length === 0 ? (
+        <div>No Products Found</div>
+      ) : (
+        products.map((product) => (
+          <MotionProductCard
+            variants={cardVariants}
+            key={product.id}
+            product={product}
+            setIsOpen={setIsOpen}
+            setModalProduct={setModalProduct}
+          />
+        ))
+      )}
     </motion.div>
   );
 };

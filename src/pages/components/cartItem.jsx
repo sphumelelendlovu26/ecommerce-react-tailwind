@@ -6,7 +6,7 @@ const CartItem = ({ product }) => {
   const dispatch = globalCartState.dispatch;
 
   return (
-    <div className="flex items-center gap-4 cartItem shadow-md hover:cursor-pointer hover:shadow-indigo-500  transition-all duration-300 round-xl ">
+    <div className="flex items-center gap-4 cartItem shadow-md hover:cursor-pointer hover:shadow-indigo-500  transition-all duration-300 round-xl text-sm  sm:text-md">
       <img
         src={product.thumbnail}
         alt={product.name}
