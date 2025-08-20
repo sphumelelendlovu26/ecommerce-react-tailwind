@@ -53,7 +53,7 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
   return (
     <motion.nav
       layout
-      className={`${bgColor} max-w-[1200px] justify-self-center sm:flex-row flex flex-col overflow-visible w-screen  sm:h-auto contentContainer    sm:fixed top-0  left-0 z-50 sm:justify-around  `}
+      className={`${bgColor} max-w-[1200px] justify-self-center sm:flex-row flex flex-col  w-screen  sm:h-auto contentContainer    sm:fixed top-0  left-0 z-50 sm:justify-around  `}
     >
       <motion.div className="flex w-full sm:w-[50%]  justify-between px-4 ">
         <SearchBar
@@ -95,8 +95,8 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
               ease: "linear",
             }}
             exit="close"
-            className={` ${isMenuOpen === true ? "h-[1000%] w-[50%] block" : "w-0 hidden "} sideBar gap-3 absolute right-0 top-12  flex flex-col items-center border-r-0 rounded-r-none  ${bgColor} z-100 rounded-md border border-indigo-200
-            sm:static sm:flex-row sm:border-0 sm:bg-transparent
+            className={` ${isMenuOpen === true ? "h-[1000%] w-[50%] block" : "w-0 hidden sm:block"} sideBar gap-3 absolute  right-0 top-12  flex flex-col items-center border-r-0 rounded-r-none  ${bgColor} z-100 rounded-md border border-indigo-200
+             sm:flex-row sm:border-0 sm:bg-transparent-blue
             sm:justify-evenly px-1  shadow-lg
             `}
           >

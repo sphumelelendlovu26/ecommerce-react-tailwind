@@ -1,7 +1,9 @@
-import { useRef, useEffect } from "react";
-import ReviewCard from "./ReviewCard";
+import { useRef, useEffect, lazy, Suspense } from "react";
+const ReviewCard = lazy(() => import("./ReviewCard"));
+
 const Reviews = ({ reviews, setIsReviewing }) => {
   const reviewRef = useRef();
+
   useEffect(() => {
     function handleOutsideClick(e) {
       if (reviewRef.current && !reviewRef.current.contains(e.target)) {
@@ -19,9 +21,11 @@ const Reviews = ({ reviews, setIsReviewing }) => {
     >
       <h2 className="font-bold text-center m-2">Reviews</h2>
       <ul>
-        {reviews.map((review, index) => (
-          <ReviewCard key={index} review={review} />
-        ))}
+        <Suspense fallback="Loading">
+          {reviews.map((review, index) => (
+            <ReviewCard key={index} review={review} />
+          ))}
+        </Suspense>
       </ul>
       <button
         onClick={() => setIsReviewing(false)}

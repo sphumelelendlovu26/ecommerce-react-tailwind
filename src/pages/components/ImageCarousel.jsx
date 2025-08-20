@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 const ImageCarousel = () => {
   const [promos, setPromos] = useState([]);
   const [index, setIndex] = useState(0);
@@ -41,17 +40,17 @@ const ImageCarousel = () => {
   const currentPromo = promos[index];
 
   return (
-    <section className=" col-span-1 row-span-1  ">
-      <h2 className="text-lg  font-bold mb-2 text-center">Promotions</h2>
-      <div className="w-full h-72 relative ">
+    <section className=" flex-col     items-center carousel flex bg-gray-200  ">
+      <h2 className="text-lg  font-bold mb-2 text-center ">Hot Deals</h2>
+      <div className="size-full flex items-center overflow-visible justify-center ">
         <img
           src={currentPromo.images[0] || ""}
           alt={currentPromo.title}
-          className="w-full  object-cover rounded-xl transition-opacity duration-300 ease-in-out"
+          className="object-cover size-1/2 "
           loading="lazy"
         />
-        <span className="bg-red-600 absolute top-4 right-0 rounded p text-white">
-          -{currentPromo.discountPercentage} OFF
+        <span className="  bg-red-600 rounded-lg text-white">
+          -{currentPromo.discountPercentage}% OFF
         </span>
       </div>
     </section>

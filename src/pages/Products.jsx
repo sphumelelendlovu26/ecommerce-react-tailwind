@@ -1,37 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import { useContext, useEffect, useState, lazy, Suspense } from "react";
+const ProductCard = lazy(() => import("./ProductCard"));
 import { motion } from "framer-motion";
 
 import { ThemeContext } from "../Context/ThemeContext";
 
 const MotionProductCard = motion(ProductCard);
 
-const ProductList = ({ query, setIsOpen, setModalProduct }) => {
+const ProductList = ({ setIsOpen, setModalProduct, products }) => {
   const { theme } = useContext(ThemeContext);
   const bgColor =
     theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-";
 
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const url = query
-          ? `https://dummyjson.com/products/search?q=${query}`
-          : "https://dummyjson.com/products";
-
-        const response = await fetch(url);
-
-        const data = await response.json();
-
-        setProducts(data.products);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProducts();
-  }, [query]);
   const cardContainerVariants = {
     animate: {
       transition: {
@@ -55,19 +34,19 @@ const ProductList = ({ query, setIsOpen, setModalProduct }) => {
       exit={{ opacity: 0, x: -20 }}
       className={`${bgColor} grid page grid-cols-2 sm:grid-cols-3 md:grid-cols-4 place-content-center gap-2 overflow-hidden respGrid`}
     >
-      {products.length === 0 ? (
-        <div>No Products Found</div>
-      ) : (
-        products.map((product) => (
-          <MotionProductCard
-            variants={cardVariants}
-            key={product.id}
-            product={product}
-            setIsOpen={setIsOpen}
-            setModalProduct={setModalProduct}
-          />
-        ))
-      )}
+      {" "}
+      <Suspense fallback="loading">
+        {products &&
+          products.map((product) => (
+            <MotionProductCard
+              variants={cardVariants}
+              key={product.id}
+              product={product}
+              setIsOpen={setIsOpen}
+              setModalProduct={setModalProduct}
+            />
+          ))}
+      </Suspense>
     </motion.div>
   );
 };

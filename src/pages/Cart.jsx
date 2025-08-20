@@ -1,7 +1,6 @@
-import CartItem from "./components/cartItem";
 import { CartContext } from "../Context/CartContext";
-import { useContext } from "react";
-
+import { useContext, lazy, Suspense } from "react";
+const CartItem = lazy(() => import("./components/cartItem"));
 const Cart = () => {
   const globalCartState = useContext(CartContext);
   const cartItems = globalCartState.state;
@@ -11,7 +10,11 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <div>No Items In Cart</div>
       ) : (
-        cartItems.map((item) => <CartItem product={item} key={item.id} />)
+        <Suspense fallback="loading">
+          {cartItems.map((item) => (
+            <CartItem product={item} key={item.id} />
+          ))}
+        </Suspense>
       )}
     </div>
   );

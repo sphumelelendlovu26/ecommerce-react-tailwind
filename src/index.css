@@ -76,7 +76,7 @@ nav {
   @apply hover:bg-transparent hover:text-indigo-500 transition hover:border-indigo-500 border-1;
 }
 .sideBar {
-  @apply py-5 sm:py-0;
+  @apply py-5 sm:py-0 sm:static;
 }
 button:hover {
   transform: scale(1.05);
@@ -89,4 +89,7 @@ button:active {
 }
 .reviewCard {
   @apply mt-2 p-1;
+}
+.carousel {
+  @apply size-auto max-h-150;
 }
