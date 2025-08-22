@@ -18,17 +18,17 @@ const Home = ({ products }) => {
       variants={containerVariants}
       initial="hidden"
       animate="show"
-      className="page w-full  flex flex-col gap-8 px-4 sm:px-8 md:px-12"
+      className="page w-full  flex flex-col items-center gap-8 px-4 sm:px-8 md:px-12"
     >
-      <section className="w-full text-center py-8 sm:py-12">
+      <section className="text-center py-8 sm:py-12">
         <motion.h1
-          className="text-3xl sm:text-5xl font-bold mb-4"
+          className="text-2xl sm:text-4xl font-bold mb-4"
           variants={containerVariants}
         >
           Welcome to <span className="text-indigo-500">Our Store</span>
         </motion.h1>
         <motion.p
-          className="text-gray-600 text-center sm:text-lg max-w-2xl mx-auto"
+          className=" text-gray-600 text-center sm:text-lg max-w-2xl  mx-auto"
           variants={containerVariants}
         >
           Discover the best products, hand-picked just for you. Browse trending
@@ -46,7 +46,7 @@ const Home = ({ products }) => {
 
         <motion.div
           variants={containerVariants}
-          className="w-full rounded-2xl shadow-md bg-white dark:bg-gray-900 p-4"
+          className="w-full rounded-2xl  gap-2 "
         >
           <h2 className="text-xl font-semibold mb-4">Top Rated Products</h2>
           {products && <PopularList products={products} />}

@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { useRef, useContext, useState, useEffect } from "react";
-import { ThemeContext } from "../../Context/ThemeContext";
+import { ThemeContext } from "../../Context&functions/ThemeContext";
 import SearchBar from "../SearchBar";
-import { CartContext } from "../../Context/CartContext";
+import { CartContext } from "../../Context&functions/CartContext";
 import { FaCartPlus } from "react-icons/fa6";
 import { CgDarkMode } from "react-icons/cg";
 import { MdLightMode } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiMenuFold2Fill, RiMenuFoldFill } from "react-icons/ri";
+import Sidebar from "./Sidebar";
 
 const Navbar = ({ userInput, setUserInput, setQuery }) => {
   const inputRef = useRef(null);
@@ -20,7 +21,7 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
 
   console.log(state);
 
-  const bgColor = theme === "dark" ? "dark" : "bg-white text-black ";
+  const bgColor = theme === "dark" ? "dark text-white" : "bg-white text-black ";
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -30,39 +31,36 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (sideBarRef.current && !sideBarRef.current.contains(e.target)) {
+      if (
+        isMenuOpen &&
+        sideBarRef.current &&
+        !sideBarRef.current.contains(e.target)
+      ) {
         setIsMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleOutsideClick);
 
-    return () => document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
   });
 
-  const sidePanelVariants = {
-    open: {
-      opacity: 1,
-      x: 0,
-    },
-    close: {
-      opacity: 0,
-      x: 100,
-    },
+  const sidebarVariants = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: 20 },
   };
 
   return (
     <motion.nav
       layout
-      className={`${bgColor} max-w-[1200px] justify-self-center sm:flex-row flex flex-col  w-screen  sm:h-auto contentContainer    sm:fixed top-0  left-0 z-50 sm:justify-around  `}
+      className={`${bgColor} max-w-[1200px] justify-self-center flex-row   w-screen  sm:h-auto contentContainer flex  sm:fixed top-0  left-0 z-50 sm:justify-around `}
     >
-      <motion.div className="flex w-full sm:w-[50%]  justify-between px-4 ">
+      <motion.div className="flex w-full sm:w-full  justify-around">
         <SearchBar
           inputRef={inputRef}
           userInput={userInput}
           setQuery={setQuery}
           setUserInput={setUserInput}
         />
-
         <div className="flex items-center gap-2 px-3 py-1 rounded-full  text-yellow-400  font-semibold cursor-pointer relative  ">
           <Link to="/cart">
             <FaCartPlus alt="View Cart " />
@@ -71,7 +69,6 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
             </span>
           </Link>
         </div>
-
         <button
           onClick={() => toggleMenu()}
           className={`sm:hidden z-[1000] `}
@@ -79,26 +76,22 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
           id="menuBtn"
         >
           {isMenuOpen === true ? <RiMenuFold2Fill /> : <RiMenuFoldFill />}{" "}
-        </button>
+        </button>{" "}
+        <Sidebar />
       </motion.div>
+
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            ref={sideBarRef}
-            variants={sidePanelVariants}
-            layout
-            initial={isMenuOpen && { opacity: 0, x: 100 }}
-            animate={isMenuOpen ? "open" : "close"}
+            className={`${bgColor} bg-blue-500 absolute right-0 top-10 w-1/3 flex flex-col items-center rounded-md h-[500%] justify-center gap-[1rem] border border-indigo-300`}
+            variants={sidebarVariants}
+            initial="open"
+            animate={isMenuOpen ? "open" : "closed"}
+            exit="closed"
             transition={{
-              duration: 0.3,
-              type: "tween",
-              ease: "linear",
+              duration: 0.5,
             }}
-            exit="close"
-            className={` ${isMenuOpen === true ? "h-[1000%] w-[50%] block" : "w-0 hidden sm:block"} sideBar gap-3 absolute  right-0 top-12  flex flex-col items-center border-r-0 rounded-r-none  ${bgColor} z-100 rounded-md border border-indigo-200
-             sm:flex-row sm:border-0 sm:bg-transparent-blue
-            sm:justify-evenly px-1  shadow-lg
-            `}
+            ref={sideBarRef}
           >
             <Link to="/" className="link ">
               Home
@@ -107,16 +100,13 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
             <Link to="/products" className="link">
               products<span className="underliner"></span>
             </Link>
-            <Link className="link">
-              <span className="underliner"></span>
-            </Link>
-
             <button
               onClick={toggleTheme}
               title="Change Theme"
-              className="mt-12 border"
+              className="mt-12 flex items-center"
             >
-              {theme === "dark" ? <MdLightMode /> : <CgDarkMode />}
+              <span>{theme === "dark" ? "light " : "Dark "}</span>
+              <span>{theme === "dark" ? <MdLightMode /> : <CgDarkMode />}</span>
             </button>
           </motion.div>
         )}

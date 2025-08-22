@@ -9,7 +9,7 @@ body {
   @apply text-sm md:text-lg;
 }
 .contentContainer {
-  @apply border-1 bg-gray-50 rounded-sm p-2 border-gray-300 shadow-md;
+  @apply bg-gray-50 rounded-sm p-2  shadow-md;
 }
 .link {
   display: flex;
@@ -42,7 +42,7 @@ input:invalid + label {
   pointer-events: none;
 }
 .inputsContainer {
-  @apply my-20;
+  @apply my-20 p-2 shadow-lg;
 }
 input {
   @apply px-2;
@@ -59,9 +59,10 @@ nav {
   right: 0;
   width: 100vw;
   background-color: black;
+  padding: 1rem;
 }
 .page {
-  @apply p-12 mt-5;
+  @apply p-5 mt-8;
 }
 .dark {
   @apply bg-gray-900 text-white transition;
@@ -79,10 +80,10 @@ nav {
   @apply py-5 sm:py-0 sm:static;
 }
 button:hover {
-  transform: scale(1.05);
+  transform: scale(1.005);
 }
 button:active {
-  transform: scale(0.95);
+  transform: scale(0.995);
 }
 .cartItem {
   @apply p-4;
@@ -92,4 +93,13 @@ button:active {
 }
 .carousel {
   @apply size-auto max-h-150;
+}
+.popularProducts {
+  @apply rounded-xl shadow-md p-4;
+}
+.cartSummary {
+  @apply fixed bottom-10 p-4 rounded-md w-1/2 right-4 sm:w-1/3  z-50;
+}
+.cartSummaryH3 {
+  @apply flex justify-between border-b-1 border-indigo-500;
 }

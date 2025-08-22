@@ -1,12 +1,12 @@
 import { MdDelete } from "react-icons/md";
 import { useContext } from "react";
-import { CartContext } from "../../Context/CartContext";
+import { CartContext } from "../../Context&functions/CartContext";
 const CartItem = ({ product }) => {
   const globalCartState = useContext(CartContext);
   const dispatch = globalCartState.dispatch;
 
   return (
-    <div className="flex items-center gap-4 cartItem shadow-md hover:cursor-pointer hover:shadow-indigo-500  transition-all duration-300 round-xl text-sm  sm:text-md">
+    <div className="flex items-center gap-4 cartItem shadow-md hover:cursor-pointer hover:shadow-indigo-500  transition-all duration-300 rounded-xl text-sm  sm:text-md">
       <img
         src={product.thumbnail}
         alt={product.name}
@@ -21,14 +21,14 @@ const CartItem = ({ product }) => {
         <div className=" flex gap-2 mt-2 justify-around px-1">
           <button
             onClick={() => dispatch({ type: "Decrease", payload: product })}
-            className="bg-gray-300 rounded-full hover:bg-gray-500"
+            className=" rounded-full indigoBtn hover:bg-gray-500"
           >
             -
           </button>
-          <span>Quantity: {product.quantity}</span>
+          <span> {product.quantity}</span>
           <button
             onClick={() => dispatch({ type: "Increase", payload: product })}
-            className="bg-gray-300 rounded-full hover:bg-gray-500 transition-all"
+            className=" indigoBtn rounded-full hover:bg-gray-500 transition-all"
           >
             +
           </button>

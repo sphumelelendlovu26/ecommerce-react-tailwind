@@ -1,7 +1,7 @@
 import { useContext, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import { ThemeContext } from "../Context/ThemeContext";
-const ProductDetails = lazy(() => import("./productDetails"));
+import { ThemeContext } from "../Context&functions/ThemeContext";
+const ProductDetails = lazy(() => import("./components/productDetails"));
 import { AnimatePresence } from "framer-motion";
 const Modal = ({ isOpen, setIsOpen, product }) => {
   const { theme } = useContext(ThemeContext);

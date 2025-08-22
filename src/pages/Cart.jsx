@@ -1,19 +1,56 @@
-import { CartContext } from "../Context/CartContext";
-import { useContext, lazy, Suspense } from "react";
+import { CartContext } from "../Context&functions/CartContext";
+import { useContext, lazy, Suspense, useMemo } from "react";
+import { Link } from "react-router-dom";
 const CartItem = lazy(() => import("./components/cartItem"));
+const CartSummary = lazy(() => import(".//components/CartSummary"));
+import { ThemeContext } from "../Context&functions/ThemeContext";
+
 const Cart = () => {
   const globalCartState = useContext(CartContext);
   const cartItems = globalCartState.state;
+  console.log(cartItems);
+  const { theme } = useContext(ThemeContext);
+
+  const summary = useMemo(() => {
+    let priceSum = 0;
+    let items = 0;
+    let discount = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      discount +=
+        (cartItems[i].discountPercentage / 100) *
+        cartItems[i].price *
+        cartItems[i].quantity;
+      priceSum += cartItems[i].price * cartItems[i].quantity;
+      items += cartItems[i].quantity;
+    }
+    return {
+      orderTotal: priceSum.toFixed(2),
+      discount: discount.toFixed(2),
+      total: (priceSum - discount).toFixed(2),
+      items: items,
+    };
+  }, [cartItems]);
+
+  console.log("summary: ", summary);
 
   return (
-    <div className="page grid cart size-screen grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-3 text-black">
+    <div
+      className={`page ${theme === "dark" ? "text-white" : "text-black"} grid cart size-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 gap-3 text-black`}
+    >
       {cartItems.length === 0 ? (
-        <div>No Items In Cart</div>
+        <h4 className="  w-full">
+          No Items In Cart. Browse{" "}
+          <Link className="text-indigo-600" to="/products">
+            Products
+          </Link>{" "}
+          To Add.
+        </h4>
       ) : (
         <Suspense fallback="loading">
           {cartItems.map((item) => (
             <CartItem product={item} key={item.id} />
           ))}
+          <CartSummary summary={summary} />
         </Suspense>
       )}
     </div>

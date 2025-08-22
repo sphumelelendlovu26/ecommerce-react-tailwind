@@ -27,7 +27,7 @@ const CartReducer = (state, action) => {
           return { ...item, quantity: item.quantity - 1 };
         } else return item;
       });
-      return tempState;
+      return tempState.filter((item) => item.quantity > 0);
     }
   }
 };

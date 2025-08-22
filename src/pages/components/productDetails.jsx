@@ -1,12 +1,12 @@
 import { useState } from "react";
-import Reviews from "./components/Reviews";
+import Reviews from "./Reviews";
 import { AnimatePresence, motion } from "framer-motion";
 
 const MotionReviews = motion(Reviews);
 const ProductDetails = ({ product, theme }) => {
   const bgColor =
     theme === "dark"
-      ? "bg-gray-900 text-gray-900"
+      ? "bg-gray-900 text-white"
       : " bg-[rgba(255, 255, 255, 0.3)] text-gray-900";
 
   const [isReviewing, setIsReviewing] = useState(false);

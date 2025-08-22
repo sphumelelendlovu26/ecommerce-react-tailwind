@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState, lazy, Suspense } from "react";
-const ProductCard = lazy(() => import("./ProductCard"));
+import { useContext, lazy, Suspense } from "react";
+const ProductCard = lazy(() => import("./components/ProductCard"));
 import { motion } from "framer-motion";
 
-import { ThemeContext } from "../Context/ThemeContext";
+import { ThemeContext } from "../Context&functions/ThemeContext";
 
 const MotionProductCard = motion(ProductCard);
 

@@ -10,7 +10,7 @@ const SearchBar = ({ inputRef, userInput, setUserInput, setQuery }) => {
   }
 
   return (
-    <div className=" h-auto  flex w-[75%] ">
+    <div className=" h-auto   flex ">
       <input
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         ref={inputRef}
