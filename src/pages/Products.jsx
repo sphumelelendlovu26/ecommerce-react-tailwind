@@ -1,12 +1,13 @@
 import { useContext, lazy, Suspense } from "react";
-const ProductCard = lazy(() => import("./components/ProductCard"));
+import ProductCard from "./components/ProductCard";
 import { motion } from "framer-motion";
-
+import { Link, useParams } from "react-router-dom";
 import { ThemeContext } from "../Context&functions/ThemeContext";
+import React from "react";
 
 const MotionProductCard = motion(ProductCard);
 
-const ProductList = ({ setIsOpen, setModalProduct, products }) => {
+const ProductList = React.memo(({ setIsOpen, setModalProduct, products }) => {
   const { theme } = useContext(ThemeContext);
   const bgColor =
     theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-";
@@ -35,9 +36,9 @@ const ProductList = ({ setIsOpen, setModalProduct, products }) => {
       className={`${bgColor} grid page grid-cols-2 sm:grid-cols-3 md:grid-cols-4 place-content-center gap-2 overflow-hidden respGrid`}
     >
       {" "}
-      <Suspense fallback="loading">
-        {products &&
-          products.map((product) => (
+      {products &&
+        products.map((product) => (
+          <Link to={`/products/${product.id}`} key={product.id}>
             <MotionProductCard
               variants={cardVariants}
               key={product.id}
@@ -45,10 +46,10 @@ const ProductList = ({ setIsOpen, setModalProduct, products }) => {
               setIsOpen={setIsOpen}
               setModalProduct={setModalProduct}
             />
-          ))}
-      </Suspense>
+          </Link>
+        ))}
     </motion.div>
   );
-};
+});
 
 export default ProductList;

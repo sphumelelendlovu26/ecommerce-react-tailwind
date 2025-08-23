@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const CartItem = lazy(() => import("./components/cartItem"));
 const CartSummary = lazy(() => import(".//components/CartSummary"));
 import { ThemeContext } from "../Context&functions/ThemeContext";
+import { motion } from "framer-motion";
 
 const Cart = () => {
   const globalCartState = useContext(CartContext);
@@ -32,9 +33,18 @@ const Cart = () => {
   }, [cartItems]);
 
   console.log("summary: ", summary);
+  const loadVariants = {
+    initial: { opacity: 0, x: 20 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 20 },
+  };
 
   return (
-    <div
+    <motion.div
+      variants={loadVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
       className={`page ${theme === "dark" ? "text-white" : "text-black"} grid cart size-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 gap-3 text-black`}
     >
       {cartItems.length === 0 ? (
@@ -53,7 +63,7 @@ const Cart = () => {
           <CartSummary summary={summary} />
         </Suspense>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Navbar from "./pages/components/NavBar.jsx";
-import { useState, useEffect, useMemo } from "react";
-import { lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import Modal from "./pages/Modal.jsx";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import ThemeProvider from "./Context&functions/ThemeContext.jsx";
 import CartProvider from "./Context&functions/CartContext.jsx";
-const Cart = lazy(() => import("./pages/Cart.jsx"));
 import Products from "./pages/Products.jsx";
 import Footer from "./pages/Footer.jsx";
+
+const Cart = lazy(() => import("./pages/Cart.jsx"));
 
 function AnimatedPages({
   userInput,
@@ -21,21 +21,20 @@ function AnimatedPages({
   setModalProduct,
   products,
 }) {
-  const location = useLocation(null);
+  const location = useLocation();
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home products={products} />}></Route>
-
+        <Route path="/" element={<Home products={products} />} />
         <Route
           path="/cart"
           element={
-            <Suspense fallback="LOADING">
+            <Suspense fallback={<div>Loading...</div>}>
               <Cart />
             </Suspense>
           }
-        ></Route>
+        />
         <Route
           path="/products"
           element={
@@ -50,7 +49,22 @@ function AnimatedPages({
               products={products}
             />
           }
-        ></Route>
+        />
+        <Route
+          path="/products/:product"
+          element={
+            <Products
+              userInput={userInput}
+              setUserInput={setUserInput}
+              query={query}
+              setQuery={setQuery}
+              setIsOpen={setIsOpen}
+              setModalProduct={setModalProduct}
+              product={product}
+              products={products}
+            />
+          }
+        />
       </Routes>
     </AnimatePresence>
   );
@@ -62,6 +76,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [product, setModalProduct] = useState(null);
   const [products, setProducts] = useState([]);
+  const [isMobileNav, setIsMobileNav] = useState(window.innerWidth < 640);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -69,21 +84,16 @@ function App() {
         const url = query
           ? `https://dummyjson.com/products/search?q=${query}`
           : "https://dummyjson.com/products";
-
         const response = await fetch(url);
-
         const data = await response.json();
-
         setProducts(data.products);
         console.log(data.products);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchProducts();
   }, [query]);
-
-  const [isMobileNav, setIsMobileNav] = useState(window.innerWidth < 640);
 
   return (
     <ThemeProvider>
@@ -97,7 +107,13 @@ function App() {
             isMobileNav={isMobileNav}
             setIsMobileNav={setIsMobileNav}
           />
-          <Modal isOpen={isOpen} setIsOpen={setIsOpen} product={product} />
+          <Modal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            product={product}
+            setModalProduct={setModalProduct}
+            products={products}
+          />
           <AnimatedPages
             userInput={userInput}
             setUserInput={setUserInput}
