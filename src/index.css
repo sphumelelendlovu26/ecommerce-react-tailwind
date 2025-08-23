@@ -86,7 +86,7 @@ button:active {
   transform: scale(0.995);
 }
 .cartItem {
-  @apply p-4;
+  @apply p-2;
 }
 .reviewCard {
   @apply mt-2 p-1;
