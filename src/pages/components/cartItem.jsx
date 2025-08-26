@@ -1,12 +1,26 @@
 import { MdDelete } from "react-icons/md";
-import { useContext } from "react";
-import { CartContext } from "../../Context&functions/CartContext";
-const CartItem = ({ product }) => {
-  const globalCartState = useContext(CartContext);
-  const dispatch = globalCartState.dispatch;
 
+import { removeCartItem } from "../../states/cartSlice";
+import { useDispatch } from "react-redux";
+
+import { motion } from "framer-motion";
+
+const CartItem = ({ product }) => {
+  const dispatch = useDispatch();
+
+  function handleRemoveItem() {
+    dispatch(removeCartItem(product.id));
+  }
   return (
-    <div className="flex items-center gap-1 cartItem shadow-md hover:cursor-pointer hover:shadow-indigo-500  transition-all duration-300 rounded-xl text-sm  sm:text-md">
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{
+        duration: 0.3,
+      }}
+      className="flex items-center gap-1 cartItem shadow-md hover:cursor-pointer hover:shadow-indigo-500   transition-all duration-300 rounded-xl text-xs  sm:text-sm"
+    >
       <img
         src={product.thumbnail}
         alt={product.name}
@@ -19,17 +33,11 @@ const CartItem = ({ product }) => {
           <span>$ {product.price}</span>
         </div>
         <div className=" flex gap-2 cartItem mt-2 justify-around px-1">
-          <button
-            onClick={() => dispatch({ type: "Decrease", payload: product })}
-            className=" rounded-full indigoBtn hover:bg-gray-500"
-          >
+          <button className=" rounded-full indigoBtn hover:bg-gray-500">
             -
           </button>
           <span> {product.quantity}</span>
-          <button
-            onClick={() => dispatch({ type: "Increase", payload: product })}
-            className=" indigoBtn rounded-full hover:bg-gray-500 transition-all"
-          >
+          <button className=" indigoBtn rounded-full hover:bg-gray-500 transition-all">
             +
           </button>
         </div>{" "}
@@ -38,13 +46,10 @@ const CartItem = ({ product }) => {
           <span>$ {product.price * product.quantity}</span>
         </div>
       </div>
-      <button
-        onClick={() => dispatch({ type: "Delete", payload: product })}
-        className="text-red-500"
-      >
+      <button onClick={() => handleRemoveItem} className="text-red-500">
         <MdDelete />
       </button>
-    </div>
+    </motion.div>
   );
 };
 

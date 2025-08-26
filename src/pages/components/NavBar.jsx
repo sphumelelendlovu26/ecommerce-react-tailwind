@@ -1,26 +1,24 @@
 import { Link } from "react-router-dom";
 import { useRef, useContext, useState, useEffect } from "react";
-import { ThemeContext } from "../../Context&functions/ThemeContext";
+import { ThemeContext } from "../../Context/ThemeContext";
 import SearchBar from "../SearchBar";
-import { CartContext } from "../../Context&functions/CartContext";
+
 import { FaCartPlus } from "react-icons/fa6";
 import { CgDarkMode } from "react-icons/cg";
 import { MdLightMode } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiMenuFold2Fill, RiMenuFoldFill } from "react-icons/ri";
 import Sidebar from "./Sidebar";
+import { useSelector } from "react-redux";
 
 const Navbar = ({ userInput, setUserInput, setQuery }) => {
   const inputRef = useRef(null);
   const sideBarRef = useRef();
 
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   // contexts
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const globalCartState = useContext(CartContext);
-  const state = globalCartState.state;
-
-  console.log(state);
-
   const bgColor = theme === "dark" ? "dark text-white" : "bg-white text-black ";
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,7 +52,7 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
       layout
       className={`${bgColor} max-w-[1200px] justify-self-center flex-row   w-screen  sm:h-auto contentContainer flex  sm:fixed top-0  left-0 z-50 sm:justify-around `}
     >
-      <motion.div className="flex w-full sm:w-full  justify-around">
+      <motion.div className="flex w-full sm:w-full z-50  justify-around">
         <SearchBar
           inputRef={inputRef}
           userInput={userInput}
@@ -65,7 +63,7 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
           <Link to="/cart">
             <FaCartPlus alt="View Cart " />
             <span className="absolute bg-indigo-600 rounded-full size-3  top-0 flex items-center justify-center -right-3 text-white font-thin text-xs">
-              {state.length}
+              {cartItems.length}
             </span>
           </Link>
         </div>

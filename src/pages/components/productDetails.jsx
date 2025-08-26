@@ -11,6 +11,8 @@ const ProductDetails = ({ product, theme, isOpen, setIsOpen }) => {
       ? "bg-gray-900 text-white"
       : " bg-[rgba(255, 255, 255, 0.3)] text-gray-900";
 
+      
+
   const reviewVariants = {
     close: { opacity: 0, y: 50, height: 0 },
     open: { opacity: 1, y: 0, height: "auto" },

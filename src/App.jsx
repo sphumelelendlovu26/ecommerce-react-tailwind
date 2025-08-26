@@ -2,23 +2,20 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Navbar from "./pages/components/NavBar.jsx";
 import { useState, useEffect, lazy, Suspense } from "react";
-import Modal from "./pages/Modal.jsx";
+import ModalProvider, { ModalContext } from "./Context/ModalContext.jsx";
+
 import { AnimatePresence } from "framer-motion";
-import ThemeProvider from "./Context&functions/ThemeContext.jsx";
-import CartProvider from "./Context&functions/CartContext.jsx";
+import ThemeProvider from "./Context/ThemeContext.jsx";
 import Products from "./pages/Products.jsx";
 import Footer from "./pages/Footer.jsx";
 
 const Cart = lazy(() => import("./pages/Cart.jsx"));
-
 function AnimatedPages({
   userInput,
   setUserInput,
   query,
   setQuery,
-  setIsOpen,
   product,
-  setModalProduct,
   products,
 }) {
   const location = useLocation();
@@ -43,23 +40,6 @@ function AnimatedPages({
               setUserInput={setUserInput}
               query={query}
               setQuery={setQuery}
-              setIsOpen={setIsOpen}
-              setModalProduct={setModalProduct}
-              product={product}
-              products={products}
-            />
-          }
-        />
-        <Route
-          path="/products/:product"
-          element={
-            <Products
-              userInput={userInput}
-              setUserInput={setUserInput}
-              query={query}
-              setQuery={setQuery}
-              setIsOpen={setIsOpen}
-              setModalProduct={setModalProduct}
               product={product}
               products={products}
             />
@@ -73,10 +53,7 @@ function AnimatedPages({
 function App() {
   const [userInput, setUserInput] = useState("");
   const [query, setQuery] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [product, setModalProduct] = useState(null);
   const [products, setProducts] = useState([]);
-  const [isMobileNav, setIsMobileNav] = useState(window.innerWidth < 640);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -97,35 +74,25 @@ function App() {
 
   return (
     <ThemeProvider>
-      <CartProvider>
+      <ModalProvider>
         <BrowserRouter>
           <Navbar
             userInput={userInput}
             setUserInput={setUserInput}
             setQuery={setQuery}
             query={query}
-            isMobileNav={isMobileNav}
-            setIsMobileNav={setIsMobileNav}
           />
-          <Modal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            product={product}
-            setModalProduct={setModalProduct}
-            products={products}
-          />
+
           <AnimatedPages
             userInput={userInput}
             setUserInput={setUserInput}
             setQuery={setQuery}
             query={query}
-            setIsOpen={setIsOpen}
-            setModalProduct={setModalProduct}
             products={products}
           />
         </BrowserRouter>
         <Footer />
-      </CartProvider>
+      </ModalProvider>
     </ThemeProvider>
   );
 }

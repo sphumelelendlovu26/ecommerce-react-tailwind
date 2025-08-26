@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CgDarkMode } from "react-icons/cg";
 import { MdLightMode } from "react-icons/md";
-import { ThemeContext } from "../../Context&functions/ThemeContext";
+import { ThemeContext } from "../../Context/ThemeContext";
 import { useContext } from "react";
 
 const Sidebar = () => {

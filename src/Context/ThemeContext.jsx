@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getLocalStorage, setLocalStorage } from "./localStorage";
+import { getLocalStorage, setLocalStorage } from "../functions/localStorage";
 export const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
