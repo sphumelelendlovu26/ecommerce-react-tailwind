@@ -1,54 +1,58 @@
 import { useContext, lazy, Suspense } from "react";
-const ProductCard = lazy(() => import("./components/ProductCard"));
+import ProductCard from "./components/ProductCard";
 import { motion } from "framer-motion";
+import { ThemeContext } from "../Context/ThemeContext";
+import React from "react";
+import Modal from "./Modal";
+import { ModalContext } from "../Context/ModalContext";
 
-import { ThemeContext } from "../Context&functions/ThemeContext";
-
-const MotionProductCard = motion(ProductCard);
-
-const ProductList = ({ setIsOpen, setModalProduct, products }) => {
+const ProductList = React.memo(({ products }) => {
   const { theme } = useContext(ThemeContext);
+  const { setModalProduct, isOpen, setIsOpen, modalProduct } =
+    useContext(ModalContext);
+
   const bgColor =
     theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-";
 
-  const cardContainerVariants = {
-    animate: {
+  const containerVariants = {
+    hidden: {},
+    show: {
       transition: {
         staggerChildren: 0.3,
       },
     },
   };
-  const cardVariants = {
-    initial: { opacity: 0, x: -20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 },
+  const itemVariants = {
+    hidden: { opacity: 0, x: 20 },
+    show: { opacity: 1, x: 0 },
   };
 
   return (
     <motion.div
-      variants={{ cardContainerVariants, cardVariants }}
-      initial="initial"
-      animate="animate"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
       transition={{ type: "tween", ease: "easeOut", duration: 0.3 }}
       layout
-      exit={{ opacity: 0, x: -20 }}
+      exit={{ opacity: 0, x: 20 }}
       className={`${bgColor} grid page grid-cols-2 sm:grid-cols-3 md:grid-cols-4 place-content-center gap-2 overflow-hidden respGrid`}
     >
       {" "}
-      <Suspense fallback="loading">
-        {products &&
-          products.map((product) => (
-            <MotionProductCard
-              variants={cardVariants}
-              key={product.id}
+      {products &&
+        products.map((product) => (
+          <motion.div variants={itemVariants} key={product.id}>
+            <ProductCard
+              initial="hidden"
+              animate="show"
               product={product}
               setIsOpen={setIsOpen}
               setModalProduct={setModalProduct}
             />
-          ))}
-      </Suspense>
+          </motion.div>
+        ))}
+      <Modal isOpen={isOpen} product={modalProduct} />
     </motion.div>
   );
-};
+});
 
 export default ProductList;

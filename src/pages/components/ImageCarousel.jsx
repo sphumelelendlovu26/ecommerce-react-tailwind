@@ -1,7 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import ThemeProvider, {
-  ThemeContext,
-} from "../../Context&functions/ThemeContext";
+import ThemeProvider, { ThemeContext } from "../../Context/ThemeContext";
 
 const ImageCarousel = () => {
   const { theme } = useContext(ThemeContext);

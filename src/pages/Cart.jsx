@@ -1,14 +1,14 @@
-import { CartContext } from "../Context&functions/CartContext";
 import { useContext, lazy, Suspense, useMemo } from "react";
 import { Link } from "react-router-dom";
 const CartItem = lazy(() => import("./components/cartItem"));
-const CartSummary = lazy(() => import(".//components/CartSummary"));
-import { ThemeContext } from "../Context&functions/ThemeContext";
-
+const CartSummary = lazy(() => import("./components/CartSummary"));
+import { ThemeContext } from "../Context/ThemeContext";
+import { AnimatePresence, motion } from "framer-motion";
+import { useSelector } from "react-redux";
 const Cart = () => {
-  const globalCartState = useContext(CartContext);
-  const cartItems = globalCartState.state;
-  console.log(cartItems);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  console.log("cart ", cartItems);
+
   const { theme } = useContext(ThemeContext);
 
   const summary = useMemo(() => {
@@ -31,10 +31,26 @@ const Cart = () => {
     };
   }, [cartItems]);
 
-  console.log("summary: ", summary);
+  const containerVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, x: 20 },
+    show: { opacity: 1, x: 0 },
+  };
 
   return (
-    <div
+    <motion.div
+      layout
+      variants={containerVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
       className={`page ${theme === "dark" ? "text-white" : "text-black"} grid cart size-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 gap-3 text-black`}
     >
       {cartItems.length === 0 ? (
@@ -47,13 +63,18 @@ const Cart = () => {
         </h4>
       ) : (
         <Suspense fallback="loading">
-          {cartItems.map((item) => (
-            <CartItem product={item} key={item.id} />
-          ))}
-          <CartSummary summary={summary} />
+          {" "}
+          <AnimatePresence>
+            {cartItems.map((item) => (
+              <motion.div key={item.id} variants={itemVariants}>
+                <CartItem product={item} />
+              </motion.div>
+            ))}
+            <CartSummary summary={summary} />{" "}
+          </AnimatePresence>
         </Suspense>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,41 +1,37 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Navbar from "./pages/components/NavBar.jsx";
-import { useState, useEffect, useMemo } from "react";
-import { lazy, Suspense } from "react";
-import Modal from "./pages/Modal.jsx";
-import { motion, AnimatePresence } from "framer-motion";
-import ThemeProvider from "./Context&functions/ThemeContext.jsx";
-import CartProvider from "./Context&functions/CartContext.jsx";
-const Cart = lazy(() => import("./pages/Cart.jsx"));
+import { useState, useEffect, lazy, Suspense } from "react";
+import ModalProvider, { ModalContext } from "./Context/ModalContext.jsx";
+
+import { AnimatePresence } from "framer-motion";
+import ThemeProvider from "./Context/ThemeContext.jsx";
 import Products from "./pages/Products.jsx";
 import Footer from "./pages/Footer.jsx";
 
+const Cart = lazy(() => import("./pages/Cart.jsx"));
 function AnimatedPages({
   userInput,
   setUserInput,
   query,
   setQuery,
-  setIsOpen,
   product,
-  setModalProduct,
   products,
 }) {
-  const location = useLocation(null);
+  const location = useLocation();
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home products={products} />}></Route>
-
+        <Route path="/" element={<Home products={products} />} />
         <Route
           path="/cart"
           element={
-            <Suspense fallback="LOADING">
+            <Suspense fallback={<div>Loading...</div>}>
               <Cart />
             </Suspense>
           }
-        ></Route>
+        />
         <Route
           path="/products"
           element={
@@ -44,13 +40,11 @@ function AnimatedPages({
               setUserInput={setUserInput}
               query={query}
               setQuery={setQuery}
-              setIsOpen={setIsOpen}
-              setModalProduct={setModalProduct}
               product={product}
               products={products}
             />
           }
-        ></Route>
+        />
       </Routes>
     </AnimatePresence>
   );
@@ -59,8 +53,6 @@ function AnimatedPages({
 function App() {
   const [userInput, setUserInput] = useState("");
   const [query, setQuery] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [product, setModalProduct] = useState(null);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -69,47 +61,38 @@ function App() {
         const url = query
           ? `https://dummyjson.com/products/search?q=${query}`
           : "https://dummyjson.com/products";
-
         const response = await fetch(url);
-
         const data = await response.json();
-
         setProducts(data.products);
         console.log(data.products);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchProducts();
   }, [query]);
 
-  const [isMobileNav, setIsMobileNav] = useState(window.innerWidth < 640);
-
   return (
     <ThemeProvider>
-      <CartProvider>
+      <ModalProvider>
         <BrowserRouter>
           <Navbar
             userInput={userInput}
             setUserInput={setUserInput}
             setQuery={setQuery}
             query={query}
-            isMobileNav={isMobileNav}
-            setIsMobileNav={setIsMobileNav}
           />
-          <Modal isOpen={isOpen} setIsOpen={setIsOpen} product={product} />
+
           <AnimatedPages
             userInput={userInput}
             setUserInput={setUserInput}
             setQuery={setQuery}
             query={query}
-            setIsOpen={setIsOpen}
-            setModalProduct={setModalProduct}
             products={products}
           />
         </BrowserRouter>
         <Footer />
-      </CartProvider>
+      </ModalProvider>
     </ThemeProvider>
   );
 }

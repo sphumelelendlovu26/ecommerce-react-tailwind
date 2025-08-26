@@ -1,3 +1,4 @@
+import React from "react";
 const ReviewCard = ({ review }) => {
   return (
     <div className=" reviewCard">
@@ -11,4 +12,4 @@ const ReviewCard = ({ review }) => {
   );
 };
 
-export default ReviewCard;
+export default React.memo(ReviewCard);

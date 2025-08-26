@@ -1,4 +1,4 @@
-import { useRef, useEffect, lazy, Suspense } from "react";
+import React, { useRef, useEffect, lazy, Suspense } from "react";
 const ReviewCard = lazy(() => import("./ReviewCard"));
 
 const Reviews = ({ reviews, setIsReviewing }) => {
@@ -13,20 +13,20 @@ const Reviews = ({ reviews, setIsReviewing }) => {
     document.addEventListener("mousedown", handleOutsideClick);
 
     return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, [setIsReviewing]);
+  }, []);
   return (
     <div
       className="w-full  bg-gray-300 absolute shadow-xl z-50 rounded bottom-1/2 p-2 flex flex-col"
       ref={reviewRef}
     >
       <h2 className="font-bold text-center m-2">Reviews</h2>
-      <ul>
-        <Suspense fallback="Loading">
+      <Suspense fallback="Loading">
+        <ul>
           {reviews.map((review, index) => (
             <ReviewCard key={index} review={review} />
           ))}
-        </Suspense>
-      </ul>
+        </ul>
+      </Suspense>
       <button
         onClick={() => setIsReviewing(false)}
         className="absolute right-1.5 top-1.5 text-red-500"
@@ -37,4 +37,4 @@ const Reviews = ({ reviews, setIsReviewing }) => {
   );
 };
 
-export default Reviews;
+export default React.memo(Reviews);

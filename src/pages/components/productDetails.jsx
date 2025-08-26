@@ -1,27 +1,46 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Reviews from "./Reviews";
 import { AnimatePresence, motion } from "framer-motion";
 
 const MotionReviews = motion(Reviews);
-const ProductDetails = ({ product, theme }) => {
+const ProductDetails = ({ product, theme, isOpen, setIsOpen }) => {
+  const [isReviewing, setIsReviewing] = useState(false);
+
   const bgColor =
     theme === "dark"
       ? "bg-gray-900 text-white"
       : " bg-[rgba(255, 255, 255, 0.3)] text-gray-900";
 
-  const [isReviewing, setIsReviewing] = useState(false);
-  console.log(isReviewing);
+      
+
   const reviewVariants = {
     close: { opacity: 0, y: 50, height: 0 },
     open: { opacity: 1, y: 0, height: "auto" },
   };
+  const productRef = useRef();
+
+  useEffect(() => {
+    function handleOutsideClick(e) {
+      if (
+        isOpen &&
+        productRef.current &&
+        !productRef.current.contains(e.target)
+      ) {
+        setIsOpen(false);
+        console.log("modal open", isOpen);
+      }
+    }
+    window.addEventListener("mousedown", handleOutsideClick);
+    return () => window.removeEventListener("mousedown", handleOutsideClick);
+  });
 
   return (
     <div
-      className={`h-full ${bgColor} overflow-scroll  backdrop-opacity-10  opacity-100 flex flex-col items-center gap-1`}
+      ref={productRef}
+      className={`h-full ${bgColor}   backdrop-opacity-10  opacity-100 flex flex-col items-center gap-1`}
     >
       <h1 className="text-center font-bold ">Product Details</h1>
-      <div className=" w-full h-5/12 flex justify-center items-center">
+      <div className=" w-full flex justify-center items-center">
         <img
           src={product.thumbnail}
           alt={product.title}

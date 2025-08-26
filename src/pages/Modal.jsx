@@ -1,10 +1,14 @@
-import { useContext, lazy, Suspense } from "react";
+import React, { useContext, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import { ThemeContext } from "../Context&functions/ThemeContext";
+import { ModalContext } from "../Context/ModalContext";
+import { ThemeContext } from "../Context/ThemeContext";
 const ProductDetails = lazy(() => import("./components/productDetails"));
 import { AnimatePresence } from "framer-motion";
-const Modal = ({ isOpen, setIsOpen, product }) => {
+
+const Modal = ({ product }) => {
   const { theme } = useContext(ThemeContext);
+  const { isOpen, setIsOpen } = useContext(ModalContext);
+
   const bgColor =
     theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-white";
 
@@ -36,7 +40,14 @@ const Modal = ({ isOpen, setIsOpen, product }) => {
               >
                 X
               </button>{" "}
-              {product && <ProductDetails product={product} theme={theme} />}
+              {product && (
+                <ProductDetails
+                  product={product}
+                  theme={theme}
+                  setIsOpen={setIsOpen}
+                  isOpen={isOpen}
+                />
+              )}
             </Suspense>
           </motion.div>
         </motion.div>
@@ -44,4 +55,4 @@ const Modal = ({ isOpen, setIsOpen, product }) => {
     </AnimatePresence>
   );
 };
-export default Modal;
+export default React.memo(Modal);

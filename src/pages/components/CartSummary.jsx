@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ThemeContext } from "../../Context&functions/ThemeContext";
+import { ThemeContext } from "../../Context/ThemeContext";
 
 const CartSummary = ({ summary }) => {
   const { theme } = useContext(ThemeContext);
