@@ -15,19 +15,24 @@ const Cart = () => {
     let priceSum = 0;
     let items = 0;
     let discount = 0;
+
     for (let i = 0; i < cartItems.length; i++) {
-      discount +=
-        (cartItems[i].discountPercentage / 100) *
-        cartItems[i].price *
-        cartItems[i].quantity;
-      priceSum += cartItems[i].price * cartItems[i].quantity;
-      items += cartItems[i].quantity;
+      const { price = 0, quantity = 1, discountPercentage = 0 } = cartItems[i];
+
+      const itemDiscount = (discountPercentage / 100) * price * quantity;
+      discount += isNaN(itemDiscount) ? 0 : itemDiscount;
+
+      const itemTotal = price * quantity;
+      priceSum += isNaN(itemTotal) ? 0 : itemTotal;
+
+      items += isNaN(quantity) ? 0 : quantity;
     }
+
     return {
       orderTotal: priceSum.toFixed(2),
       discount: discount.toFixed(2),
       total: (priceSum - discount).toFixed(2),
-      items: items,
+      items,
     };
   }, [cartItems]);
 
@@ -51,7 +56,9 @@ const Cart = () => {
       initial="initial"
       animate="animate"
       exit="exit"
-      className={`page ${theme === "dark" ? "text-white" : "text-black"} grid cart size-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 gap-3 text-black`}
+      className={`page ${
+        theme === "dark" ? "text-white" : "text-black"
+      } grid cart size-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 gap-3 text-black`}
     >
       {cartItems.length === 0 ? (
         <h4 className="  w-full">

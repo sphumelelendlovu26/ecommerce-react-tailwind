@@ -1,6 +1,11 @@
 import { MdDelete } from "react-icons/md";
 
-import { removeCartItem } from "../../states/cartSlice";
+import {
+  addCartItem,
+  decreaseQuantity,
+  increaseQuantity,
+  removeCartItem,
+} from "../../states/cartSlice";
 import { useDispatch } from "react-redux";
 
 import { motion } from "framer-motion";
@@ -10,6 +15,13 @@ const CartItem = ({ product }) => {
 
   function handleRemoveItem() {
     dispatch(removeCartItem(product.id));
+  }
+
+  function handleIncreaseQuantity() {
+    dispatch(increaseQuantity(product.id));
+  }
+  function handleDecreaseQuantity() {
+    dispatch(decreaseQuantity(product.id));
   }
   return (
     <motion.div
@@ -33,11 +45,17 @@ const CartItem = ({ product }) => {
           <span>$ {product.price}</span>
         </div>
         <div className=" flex gap-2 cartItem mt-2 justify-around px-1">
-          <button className=" rounded-full indigoBtn hover:bg-gray-500">
+          <button
+            onClick={handleDecreaseQuantity}
+            className=" rounded-full indigoBtn hover:bg-gray-500"
+          >
             -
           </button>
           <span> {product.quantity}</span>
-          <button className=" indigoBtn rounded-full hover:bg-gray-500 transition-all">
+          <button
+            onClick={handleIncreaseQuantity}
+            className=" indigoBtn rounded-full hover:bg-gray-500 transition-all"
+          >
             +
           </button>
         </div>{" "}
@@ -46,7 +64,7 @@ const CartItem = ({ product }) => {
           <span>$ {product.price * product.quantity}</span>
         </div>
       </div>
-      <button onClick={() => handleRemoveItem} className="text-red-500">
+      <button onClick={() => handleRemoveItem()} className="text-red-500">
         <MdDelete />
       </button>
     </motion.div>

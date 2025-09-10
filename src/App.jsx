@@ -3,7 +3,7 @@ import Home from "./pages/Home.jsx";
 import Navbar from "./pages/components/NavBar.jsx";
 import { useState, useEffect, lazy, Suspense } from "react";
 import ModalProvider, { ModalContext } from "./Context/ModalContext.jsx";
-
+import { getLocalStorage } from "./functions/localStorage.jsx";
 import { AnimatePresence } from "framer-motion";
 import ThemeProvider from "./Context/ThemeContext.jsx";
 import Products from "./pages/Products.jsx";
@@ -19,7 +19,7 @@ function AnimatedPages({
   products,
 }) {
   const location = useLocation();
-
+  console.log(localStorage);
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
