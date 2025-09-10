@@ -62,7 +62,7 @@ const Navbar = ({ userInput, setUserInput, setQuery }) => {
         <div className="flex items-center gap-2 px-3 py-1 rounded-full  text-yellow-400  font-semibold cursor-pointer relative  ">
           <Link to="/cart">
             <FaCartPlus alt="View Cart " />
-            <span className="absolute bg-indigo-600 rounded-full size-3  top-0 flex items-center justify-center -right-3 text-white font-thin text-xs">
+            <span className="absolute bg-indigo-600 rounded-full size-3  top-0 flex items-center justify-center -right-2.5 text-white font-thin text-[0.6rem]">
               {cartItems.length}
             </span>
           </Link>

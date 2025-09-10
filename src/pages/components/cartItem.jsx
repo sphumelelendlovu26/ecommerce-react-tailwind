@@ -39,7 +39,9 @@ const CartItem = ({ product }) => {
         className="w-20 h-20 object-cover"
       />
       <div className="flex-1">
-        <h3 className="font-semibold text-center">{product.title}</h3>
+        <h3 className="font-semibold text-center text-indigo-600">
+          {product.title}
+        </h3>
         <div className="flex justify-between w-full border-b-1 border-indigo-500">
           <span>Price : </span>
           <span>$ {product.price}</span>
@@ -47,14 +49,14 @@ const CartItem = ({ product }) => {
         <div className=" flex gap-2 cartItem mt-2 justify-around px-1">
           <button
             onClick={handleDecreaseQuantity}
-            className=" rounded-full indigoBtn hover:bg-gray-500"
+            className=" rounded-full flex justify-center size-5 text-center indigoBtn hover:bg-gray-500"
           >
             -
           </button>
           <span> {product.quantity}</span>
           <button
             onClick={handleIncreaseQuantity}
-            className=" indigoBtn rounded-full hover:bg-gray-500 transition-all"
+            className=" indigoBtn rounded-full flex justify-center size-5 text-center hover:bg-gray-500 transition-all"
           >
             +
           </button>

@@ -1,4 +1,4 @@
-import { useContext, lazy, Suspense } from "react";
+import { useContext } from "react";
 import ProductCard from "./components/ProductCard";
 import { motion } from "framer-motion";
 import { ThemeContext } from "../Context/ThemeContext";
@@ -18,7 +18,7 @@ const ProductList = React.memo(({ products }) => {
     hidden: {},
     show: {
       transition: {
-        staggerChildren: 0.3,
+        staggerChildren: 0.2,
       },
     },
   };

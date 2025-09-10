@@ -4,6 +4,7 @@ import { ModalContext } from "../Context/ModalContext";
 import { ThemeContext } from "../Context/ThemeContext";
 const ProductDetails = lazy(() => import("./components/productDetails"));
 import { AnimatePresence } from "framer-motion";
+import Loader from "../loaders/Loader";
 
 const Modal = ({ product }) => {
   const { theme } = useContext(ThemeContext);
@@ -23,7 +24,9 @@ const Modal = ({ product }) => {
       {isOpen && (
         <motion.div
           variants={modalVariants}
-          className={`fixed ${isOpen === true ? "z-[1000]" : "z-[-1000]"} top-0 left-0 modal  bg-transparent opacity-100 backdrop-opacity-5  flex justify-center items-center   `}
+          className={`fixed ${
+            isOpen === true ? "z-[1000]" : "z-[-1000]"
+          } top-0 left-0 modal  bg-transparent opacity-100 backdrop-opacity-5  flex justify-center items-center   `}
         >
           <motion.div
             variants={modalVariants}
@@ -33,7 +36,7 @@ const Modal = ({ product }) => {
             transition={{ duration: 0.3 }}
             className={`${bgColor} shadow-lg border-1 border-indigo-200 h-10/12 w-11/12 sm:w-1/2 rounded-sm relative max-w-xl modalProductContainer opacity-100`}
           >
-            <Suspense fallback="LOADING">
+            <Suspense fallback={<Loader />}>
               <button
                 className="z-50 text-red-500 absolute right-1 top-1 hover:bg-red-500 hover:text-white rounded transition-all duration-200"
                 onClick={() => setIsOpen(false)}

@@ -13,7 +13,7 @@ const Home = ({ products }) => {
       opacity: 1,
       x: 0,
       transition: {
-        staggerChildren: 0.3,
+        staggerChildren: 0.2,
       },
     },
   };
@@ -31,7 +31,7 @@ const Home = ({ products }) => {
           className="text-2xl sm:text-4xl font-bold mb-4"
           variants={containerVariants}
         >
-          Welcome to <span className="text-indigo-500">Our Store</span>
+          Welcome to <span className="text-indigo-500">SwiftBuy</span>
         </motion.h1>
         <motion.p
           className=" text-gray-600 text-center sm:text-lg max-w-2xl  mx-auto"

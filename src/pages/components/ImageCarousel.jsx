@@ -65,6 +65,9 @@ const ImageCarousel = () => {
         <div className="absolute top-2 left-2 bg-red-600 rounded-lg px-3 py-1 text-white font-bold">
           -{currentPromo.discountPercentage}% OFF
         </div>
+        <div>
+          
+        </div>
 
         <div
           className={`text-center ${backgroundColor} mb-2 backdrop-blur-xl text-shadow-gray-900 text-s  absolute bottom-8  `}

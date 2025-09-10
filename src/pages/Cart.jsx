@@ -5,6 +5,8 @@ const CartSummary = lazy(() => import("./components/CartSummary"));
 import { ThemeContext } from "../Context/ThemeContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import { BsCartXFill } from "react-icons/bs";
+import Loader from "../loaders/Loader";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   console.log("cart ", cartItems);
@@ -56,20 +58,35 @@ const Cart = () => {
       initial="initial"
       animate="animate"
       exit="exit"
-      className={`page ${
-        theme === "dark" ? "text-white" : "text-black"
-      } grid cart size-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 gap-3 text-black`}
+      className={`page ${theme === "dark" ? "text-white" : "text-black"} ${
+        cartItems.length > 0 ? "grid" : "flex  justify-center"
+      }  cart size-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 gap-3 text-black
+      `}
     >
       {cartItems.length === 0 ? (
-        <h4 className="  w-full">
-          No Items In Cart. Browse{" "}
-          <Link className="text-indigo-600" to="/products">
-            Products
-          </Link>{" "}
-          To Add.
-        </h4>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          variants={itemVariants}
+          className=" flex flex-col gap-2 items-center justify-center w-11/12"
+        >
+          <BsCartXFill className="size-1/2  text-indigo-500 " />
+          <h4>
+            No Items In Cart. Browse{" "}
+            <Link className="text-indigo-600 " to="/products">
+              Products
+            </Link>{" "}
+            To Add.
+          </h4>
+        </motion.div>
       ) : (
-        <Suspense fallback="loading">
+        <Suspense
+          fallback={
+            <div>
+              <Loader />
+            </div>
+          }
+        >
           {" "}
           <AnimatePresence>
             {cartItems.map((item) => (

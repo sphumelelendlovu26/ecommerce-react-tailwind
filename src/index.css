@@ -62,7 +62,7 @@ nav {
   padding: 1rem;
 }
 .page {
-  @apply p-5 mt-8;
+  @apply p-5 mt-10 relative;
 }
 .dark {
   @apply bg-gray-900 text-white transition;
@@ -89,7 +89,7 @@ button:active {
   @apply p-2;
 }
 .reviewCard {
-  @apply mt-2 p-1;
+  @apply mt-2 p-2;
 }
 .carousel {
   @apply size-auto max-h-150;
@@ -102,4 +102,7 @@ button:active {
 }
 .cartSummaryH3 {
   @apply flex justify-between border-b-1 border-indigo-500;
+}
+.loader {
+  @apply size-2.5 border-2 border-indigo-500 rounded-full;
 }
